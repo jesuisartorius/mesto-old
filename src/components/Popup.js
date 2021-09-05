@@ -11,10 +11,7 @@ class Popup {
 
   open() {
     this._popupElement.classList.add("popup_opened");
-
-    if (this._popupElement.classList.contains("popup_opened")) {
-      document.addEventListener("keydown", this._handleEscClose);
-    }
+    document.addEventListener("keydown", this._handleEscClose);
   }
 
   close() {

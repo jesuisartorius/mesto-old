@@ -116,7 +116,10 @@ api
     });
 
     // show popup for adding a new card
-    addCardButton.addEventListener("click", () => newCardPopup.open());
+    addCardButton.addEventListener("click", () => {
+      newCardPopup.open();
+      cardFormValidator.enableValidation();
+    });
     newCardPopup.setEventListeners();
 
     // Create Cards
@@ -135,8 +138,8 @@ api
                 .then(() => {
                   card.handleDeleteCard();
                   handleLoading(true, popupConfirm, "Да");
+                  deleteCardPopup.close();
                 })
-                .then(() => deleteCardPopup.close())
                 .catch((err) => console.log(err));
             });
           },

@@ -77,10 +77,7 @@ class Api {
       headers: this._headers,
       method: "POST",
       body: JSON.stringify({ name: this.name, link: this.link }),
-    }).then((res) => {
-      if (res.ok) return res.json();
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    }).then((res) => this._handleResponse(res));
   }
 }
 
