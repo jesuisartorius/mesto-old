@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesto</title>
+    <link rel="stylesheet" href="./pages/index.css">
+  </head>
+
+  <body class="page">
+    <header class="header">
+      <img
+        src="<%= require('./images/Logo.svg')%>"
+        alt="Логотип сайта"
+        class="header__logo"
+      />
+    </header>
+
+    <main>
+      <!-- Profile Section -->
+      <section class="profile">
+        <div>
+          <div class="profile__avatar-overlay"></div>
+          <img
+            src="<%= require('./images/avatar.png')%>"
+            alt="Фотография Жак-Ив Кусто"
+            class="profile__avatar"
+          />
+        </div>
+        <div class="profile__info">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <button
+            class="profile__edit-button"
+            aria-label="edit button"
+            type="button"
+          ></button>
+          <p class="profile__job">Исследователь океана</p>
+        </div>
+        <button
+          class="profile__add-button"
+          aria-label="Add button"
+          type="button"
+        ></button>
+      </section>
+
+      <!-- Update Profile Picture Popup -->
+      <section class="popup popup_type_profile-avatar">
+        <div class="popup__container">
+          <button
+            type="button"
+            class="popup__close-button popup__close-button_avatar"
+            aria-label="Close button"
+          ></button>
+          <form
+            name="avatar"
+            class="popup__form popup__form_type_edit-profile-avatar"
+            novalidate
+          >
+            <h3 class="popup__title">Обновить аватар</h3>
+            <label class="popup__form-field">
+              <input
+                type="url"
+                name="avatar"
+                class="popup__input popup__input_type_image-link"
+                placeholder="Ссылка на фотографию"
+                id="avatar-input"
+                required
+              />
+              <span class="popup__input-error avatar-input-error"></span>
+            </label>
+            <button
+              type="submit"
+              class="popup__button"
+              aria-label="Save Button"
+              disabled
+            >
+              Сохранить
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Edit profile Popup Form -->
+      <section class="popup popup_type_edit-profile">
+        <div class="popup__container">
+          <button
+            type="button"
+            class="popup__close-button popup__close-button_profile"
+            aria-label="Close button"
+          ></button>
+          <form
+            name="profile"
+            class="popup__form popup__form_type_edit-profile"
+            novalidate
+          >
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <label class="popup__form-field">
+              <input
+                type="text"
+                name="name"
+                class="popup__input popup__input_type_name"
+                placeholder="Имя"
+                minlength="2"
+                maxlength="40"
+                id="name-input"
+                required
+              />
+              <span class="popup__input-error name-input-error"></span>
+            </label>
+            <label class="popup__form-field">
+              <input
+                type="text"
+                name="about"
+                class="popup__input popup__input_type_job"
+                placeholder="Описание"
+                minlength="2"
+                maxlength="200"
+                id="job-input"
+                required
+              />
+              <span class="popup__input-error job-input-error"></span>
+            </label>
+            <button type="submit" class="popup__button">Сохранить</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Add Card Popup Form -->
+      <section class="popup popup_type_add-card">
+        <div class="popup__container">
+          <button
+            type="button"
+            class="popup__close-button popup__close-button_add-card"
+            aria-label="Close button"
+          ></button>
+          <form
+            name="card"
+            class="popup__form popup__form_type_add-card"
+            novalidate
+          >
+            <h2 class="popup__title">Новое место</h2>
+            <label class="popup__form-field">
+              <input
+                type="text"
+                name="name"
+                class="popup__input popup__input_type_title"
+                placeholder="Название"
+                required
+                minlength="1"
+                maxlength="30"
+                id="title-input"
+              />
+              <span class="popup__input-error title-input-error"></span>
+            </label>
+
+            <label class="popup__form-field">
+              <input
+                type="url"
+                name="link"
+                class="popup__input popup__input_type_image-link"
+                placeholder="Ссылка на изображение"
+                required
+                id="url-input"
+              />
+              <span class="popup__input-error url-input-error"></span>
+            </label>
+            <button type="submit" class="popup__button">Создать</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Image Preview Popup -->
+      <section class="popup popup_type_preview">
+        <div class="popup__container popup__container_preview">
+          <button
+            type="button"
+            class="popup__close-button popup__close-button_preview"
+            aria-label="Close button"
+          ></button>
+          <img class="popup__image" src="#" alt="preview image" />
+          <p class="popup__preview-title"></p>
+        </div>
+      </section>
+
+      <!-- Delete Card Confirmation Popup -->
+      <section class="popup popup_type_confirm">
+        <div class="popup__container popup__container_confirmation">
+          <button
+            type="button"
+            class="popup__close-button popup__close-button_confirm"
+            aria-label="Close button"
+          ></button>
+          <form name="card" class="popup__form popup__form_type_confirm">
+            <p class="popup__title">Вы уверены?</p>
+            <button
+              type="submit"
+              class="popup__button"
+              aria-label="Confirm Button"
+            >
+              Да
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Cards -->
+      <section class="elements">
+        <ul class="elements__list"></ul>
+      </section>
+
+      <!-- Cards Template -->
+      <template id="cards-template">
+        <li class="element">
+          <button
+            class="element__delete-button"
+            aria-label="Delete button"
+            type="button"
+          ></button>
+          <div class="element__image"></div>
+          <div class="element__flex">
+            <h2 class="element__text"></h2>
+            <div class="element__like-wrapper">
+              <button type="button" class="element__like-button"></button>
+              <p class="element__like-count"></p>
+            </div>
+          </div>
+        </li>
+      </template>
+    </main>
+    <footer class="footer">
+      <p class="footer__text">&copy; 2021 Mesto Russia</p>
+    </footer>
+  </body>
+</html>
