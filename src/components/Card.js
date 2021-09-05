@@ -68,9 +68,7 @@ class Card {
     this.handleLikeCard();
     this._hideBinIcon();
 
-    this._element.querySelector(
-      ".element__image"
-    ).style.backgroundImage = `url(${this._link})`;
+    this._element.querySelector(".element__image").style.backgroundImage = `url(${this._link})`;
     this._element.querySelector(".element__text").textContent = this._name;
 
     return this._element;
