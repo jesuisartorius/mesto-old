@@ -1,6 +1,6 @@
 import "./index.css";
-import Card from "../components/Card";
-import Api from "../components/Api";
+import Card from "../components/Card.js";
+import Api from "../components/Api.js";
 import Section from "../components/Section.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -27,6 +27,7 @@ import {
   profileFormNameInput,
   profileFormJobInput,
 } from "../utils/constants.js";
+
 
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-27",
@@ -63,8 +64,6 @@ function handleLoading(isLoading, popup, textInput) {
 const imagePopup = new PopupWithImage(popupPreview);
 imagePopup.setEventListeners();
 
-console.log(api.getAppInfo());
-
 // Delete card confirmation popup
 const deleteCardPopup = new PopupWithForm({
   popupSelector: popupConfirm,
@@ -78,6 +77,7 @@ const userInfo = new UserInfo({
   about: profileAbout,
   avatar: profileAvatar,
 });
+
 
 // render the cards to the DOM
 api
@@ -110,6 +110,7 @@ api
             createCard(item);
             handleLoading(false, popupAddCard, "Сохранить");
           })
+          .then(() => newCardPopup.close())
           .catch((err) => console.log(err));
       },
     });
@@ -135,6 +136,7 @@ api
                   card.handleDeleteCard();
                   handleLoading(true, popupConfirm, "Да");
                 })
+                .then(() => deleteCardPopup.close())
                 .catch((err) => console.log(err));
             });
           },
@@ -142,19 +144,15 @@ api
           handleLikeClick: (cardId, likeButton) => {
             if (likeButton.classList.contains("element__like-button_active")) {
               api
-                .deleteLikes(cardId)
-                .then((data) => {
-                  card.handleLikeCount(data.likes.length);
-                  card.handleLikeButtonToggle(likeButton);
-                })
+                .deleteLike(cardId)
+                .then((data) => card.handleLikeCount(data.likes.length))
+                .then(() => card.handleLikeButtonToggle(likeButton))
                 .catch((err) => console.error(err));
             } else {
               api
                 .addLike(cardId)
-                .then((data) => {
-                  card.handleLikeCount(data.likes.length);
-                  card.handleLikeButtonToggle(likeButton);
-                })
+                .then((data) => card.handleLikeCount(data.likes.length))
+                .then(() => card.handleLikeButtonToggle(likeButton))
                 .catch((err) => console.error(err));
             }
           },
@@ -176,7 +174,9 @@ const userInfoPopup = new PopupWithForm({
       .setUserInfo({ name, about })
       .then(() => {
         userInfo.setUserInfo({ name, about });
+        handleLoading(true, popupEditProfile, "Сохранить");
       })
+      .then(() => userInfoPopup.close())
       .catch((err) => console.log(err));
   },
 });
@@ -192,8 +192,9 @@ const profileAvatarPopup = new PopupWithForm({
       .setUserAvatar({ avatar })
       .then(({ avatar }) => {
         userInfo.setAvatarInfo({ avatar });
-        handleLoading(false, popupProfileAvatar, "Сохранение");
+        handleLoading(false, popupProfileAvatar, "Сохранить");
       })
+      .then(() => profileAvatarPopup.close())
       .catch((err) => console.log(err));
   },
 });
@@ -202,7 +203,7 @@ profileAvatarPopup.setEventListeners();
 
 // Event Listeners
 profileEditButton.addEventListener("click", () => {
-  // prepopulate profile form at first click
+
   const { name, about } = userInfo.getUserInfo();
   profileFormNameInput.value = name;
   profileFormJobInput.value = about;

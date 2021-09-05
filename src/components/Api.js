@@ -58,7 +58,7 @@ class Api {
     }).then((res) => this._handleResponse(res));
   }
 
-  deleteLikes(cardId) {
+  deleteLike(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       headers: this._headers,
       method: "DELETE",
