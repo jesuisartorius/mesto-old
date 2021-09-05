@@ -103,12 +103,12 @@ api
     const newCardPopup = new PopupWithForm({
       popupSelector: popupAddCard,
       handleSubmit: ({ name, link }) => {
-        handleLoading(true, popupAddCard, "Saving...");
+        handleLoading(true, popupAddCard, "Сохранение...");
         api
           .addCard({ name, link })
           .then((item) => {
             createCard(item);
-            handleLoading(false, popupAddCard, "Save");
+            handleLoading(false, popupAddCard, "Сохранить");
           })
           .catch((err) => console.log(err));
       },
@@ -128,12 +128,12 @@ api
           handleDeleteClick: (cardId) => {
             deleteCardPopup.open();
             deleteCardPopup.setSubmitHandler(() => {
-              handleLoading(true, popupConfirm, "Deleting...");
+              handleLoading(true, popupConfirm, "Удаление...");
               api
                 .deleteCard(cardId)
                 .then(() => {
                   card.handleDeleteCard();
-                  handleLoading(true, popupConfirm, "Yes");
+                  handleLoading(true, popupConfirm, "Да");
                 })
                 .catch((err) => console.log(err));
             });
@@ -171,7 +171,7 @@ api
 const userInfoPopup = new PopupWithForm({
   popupSelector: popupEditProfile,
   handleSubmit: ({ name, about }) => {
-    handleLoading(true, popupEditProfile, "Saving...");
+    handleLoading(true, popupEditProfile, "Сохранение...");
     api
       .setUserInfo({ name, about })
       .then(() => {
@@ -187,12 +187,12 @@ userInfoPopup.setEventListeners();
 const profileAvatarPopup = new PopupWithForm({
   popupSelector: popupProfileAvatar,
   handleSubmit: ({ avatar }) => {
-    handleLoading(true, popupProfileAvatar, "Saving...");
+    handleLoading(true, popupProfileAvatar, "Сохранение...");
     api
       .setUserAvatar({ avatar })
       .then(({ avatar }) => {
         userInfo.setAvatarInfo({ avatar });
-        handleLoading(false, popupProfileAvatar, "Save");
+        handleLoading(false, popupProfileAvatar, "Сохранение");
       })
       .catch((err) => console.log(err));
   },
