@@ -6,7 +6,7 @@
   border-radius: 2px;
   cursor: pointer;
   padding: 0;
-  margin: auto;
+  margin-left: auto;
   transition: all 0.2s ease-in-out;
   background-image: url("../../../../images/Vector.svg");
   background-repeat: no-repeat;
