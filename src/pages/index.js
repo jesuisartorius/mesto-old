@@ -50,14 +50,9 @@ cardFormValidator.enableValidation();
 editAvatarValidator.enableValidation();
 
 // Handle Loading
-function handleLoading(isLoading, popup, textInput) {
-  if (isLoading) {
-    document.querySelector(popup).querySelector(".popup__button").textContent =
-      textInput;
-  } else {
-    document.querySelector(popup).querySelector(".popup__button").textContent =
-      textInput;
-  }
+function handleLoading(popup, textInput) {
+    document.querySelector(popup).querySelector(".popup__button").textContent = textInput;
+
 }
 
 // Preview Image Popup
@@ -103,12 +98,12 @@ api
     const newCardPopup = new PopupWithForm({
       popupSelector: popupAddCard,
       handleSubmit: ({ name, link }) => {
-        handleLoading(true, popupAddCard, "Сохранение...");
+        handleLoading(popupAddCard, "Сохранение...");
         api
           .addCard({ name, link })
           .then((item) => {
             createCard(item);
-            handleLoading(false, popupAddCard, "Сохранить");
+            handleLoading(popupAddCard, "Сохранить");
           })
           .then(() => newCardPopup.close())
           .catch((err) => console.log(err));
@@ -132,12 +127,12 @@ api
           handleDeleteClick: (cardId) => {
             deleteCardPopup.open();
             deleteCardPopup.setSubmitHandler(() => {
-              handleLoading(true, popupConfirm, "Удаление...");
+              handleLoading(popupConfirm, "Удаление...");
               api
                 .deleteCard(cardId)
                 .then(() => {
                   card.handleDeleteCard();
-                  handleLoading(true, popupConfirm, "Да");
+                  handleLoading(popupConfirm, "Да");
                   deleteCardPopup.close();
                 })
                 .catch((err) => console.log(err));
@@ -172,12 +167,12 @@ api
 const userInfoPopup = new PopupWithForm({
   popupSelector: popupEditProfile,
   handleSubmit: ({ name, about }) => {
-    handleLoading(true, popupEditProfile, "Сохранение...");
+    handleLoading(popupEditProfile, "Сохранение...");
     api
       .setUserInfo({ name, about })
       .then(() => {
         userInfo.setUserInfo({ name, about });
-        handleLoading(true, popupEditProfile, "Сохранить");
+        handleLoading(popupEditProfile, "Сохранить");
       })
       .then(() => userInfoPopup.close())
       .catch((err) => console.log(err));
@@ -190,12 +185,12 @@ userInfoPopup.setEventListeners();
 const profileAvatarPopup = new PopupWithForm({
   popupSelector: popupProfileAvatar,
   handleSubmit: ({ avatar }) => {
-    handleLoading(true, popupProfileAvatar, "Сохранение...");
+    handleLoading(popupProfileAvatar, "Сохранение...");
     api
       .setUserAvatar({ avatar })
       .then(({ avatar }) => {
         userInfo.setAvatarInfo({ avatar });
-        handleLoading(false, popupProfileAvatar, "Сохранить");
+        handleLoading(popupProfileAvatar, "Сохранить");
       })
       .then(() => profileAvatarPopup.close())
       .catch((err) => console.log(err));
