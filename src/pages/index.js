@@ -113,7 +113,7 @@ api
     // show popup for adding a new card
     addCardButton.addEventListener("click", () => {
       newCardPopup.open();
-      cardFormValidator.enableValidation();
+      cardFormValidator.toggleButtonState();
     });
     newCardPopup.setEventListeners();
 

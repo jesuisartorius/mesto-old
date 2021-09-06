@@ -46,7 +46,7 @@ class FormValidator {
     return this._inputList.some((inputElement) => !inputElement.validity.valid);
   }
 
-  _toggleButtonState() {
+  toggleButtonState() {
     if (this._hasInvalidInput(this._inputList)) {
       this._buttonElement.disabled = true;
       this._buttonElement.classList.add(this._inactiveButtonClass);
@@ -58,7 +58,7 @@ class FormValidator {
 
   _setEventListeners() {
     // disable submit button on loading
-    this._toggleButtonState();
+    this.toggleButtonState();
 
     // validate all inputs
     this._inputList.forEach((inputElement) => {
@@ -66,7 +66,7 @@ class FormValidator {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
 
-        this._toggleButtonState();
+        this.toggleButtonState();
       });
 
       // after resetting form, validation messages should also reset
@@ -77,7 +77,7 @@ class FormValidator {
   enableValidation() {
     this._formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._toggleButtonState();
+      this.toggleButtonState();
     });
 
     this._setEventListeners();
