@@ -14,3 +14,9 @@
 ## Ссылка на проект
 
 https://thisisartorius.github.io/mesto/
+
+```bash
+npm install  # install dependencies
+npm run build # builds the project
+npm run dev # open the project in the browser localhost:8080
+```
