@@ -102,7 +102,8 @@ api
         api
           .addCard({ name, link })
           .then((item) => {
-            createCard(item);
+            // createCard(item);
+            cardsList.setItem(createCard(item));
             handleLoading(popupAddCard, "Сохранить");
           })
           .then(() => newCardPopup.close())
@@ -158,7 +159,8 @@ api
         userId,
         cardTemplate
       );
-      cardsList.setItem(card.generateCard());
+      // cardsList.setItem(card.generateCard());
+      return card.generateCard();
     }
   })
   .catch((err) => console.log(err));
